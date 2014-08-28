@@ -79,7 +79,7 @@ shots_scale.grid(row=2,column=1,padx=5)
 shots=shots_scale.wget()
 
 exp_scale=Scale(root,from_=0, to=30,orient=HORIZONTAL,label="exposure",tickinterval=5)
-exp_scale.grid(row=3,column=1,padx=5
+exp_scale.grid(row=3,column=1,padx=5)
 exposure=exp_scale.wget()
 
 waittime_scale=Scale(root,from_=0,to=600,orient=HORIZONTAL,label="waittime",tickinterval=10)  #ten minutes max?
