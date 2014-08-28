@@ -6,7 +6,7 @@ from time import sleep
 gpio.setwarnings(False)
 
 
-###setting up pins to controll motors
+###setting up pins to control motors
 shutterpin = 10
 motorpin1 = 3
 motorpin2 = 7
@@ -55,22 +55,35 @@ def moveH():
 ###############
 
 ##now to make the actual GUI with all inputs
-root = Tk()
-root.wm_title("Timelapse control")
-root.config(background="#FFFFFF")
-mainFrame= Frame(root,bg="#037481")
-mainFrame.grid()
+mainframe= Tk()
+mainframe.wm_title("Timelapse control")
+mainframe.config(background="#FFFFFF")
+root= Frame(mainframe,bg="#037481")
+root.grid()
 
-leftbutton=Radiobutton(root, text="move left", command=left)
-leftbutton.grid(row=0,column=1)
-rightbutton=Radiobutton(root, text="move right", command=right)
-rightbutton.grid(row=1, column=1)
-upbutton=Radiobutton(root, text="move right", command=up)
-upbutton.grid(row=0, column=2)
-downbutton=Radiobutton(root, text="move down", command=down)
-downbutton.grid(row=1,column=2)
+var=IntVar()
+var1=IntVar()
 
+leftbutton=Radiobutton(root, text="move left", variable=var,value=1,command=left)
+leftbutton.grid(row=0,column=1,padx=5,pady=5)
+rightbutton=Radiobutton(root, text="move right", variable=var,value=2,command=right)
+rightbutton.grid(row=1, column=1,padx=5,pady=5)
+upbutton=Radiobutton(root, text="move up", variable=var1,value=3,command=up)
+upbutton.grid(row=0, column=2,padx=5,pady=5)
+downbutton=Radiobutton(root, text="move down", variable=var1,value=4,command=down)
+downbutton.grid(row=1,column=2,padx=5,pady=5)
 
+shots_scale=Scale(root,from_=0, to=1000,resolution=2, orient=HORIZONTAL,label="shots",tickinterval=50)
+shots_scale.grid(row=2,column=1,padx=5)
+shots=shots_scale.wget()
+
+exp_scale=Scale(root,from_=0, to=30,orient=HORIZONTAL,label="exposure",tickinterval=5)
+exp_scale.grid(row=3,column=1,padx=5
+exposure=exp_scale.wget()
+
+waittime_scale=Scale(root,from_=0,to=600,orient=HORIZONTAL,label="waittime",tickinterval=10)  #ten minutes max?
+waittime_scale.grid(row=4,column=1,padx=5)
+waittime=waittime_scale.wget()
 #####
 
 root.mainloop()  #this calls the actual GUI, everything must be above it
