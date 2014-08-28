@@ -58,6 +58,7 @@ def moveH():
 mainframe= Tk()
 mainframe.wm_title("Timelapse control")
 mainframe.config(background="#FFFFFF")
+mainframe.geometry('240x320')
 root= Frame(mainframe,bg="#037481")
 root.grid()
 
