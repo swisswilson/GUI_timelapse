@@ -51,17 +51,48 @@ def moveH():
                 sleep(0.5)
                 step(0,0)
                 sleep(0.5)
+				
+				
+#####defining functions for use in the GUI to navigate and call control code
+def hide_startframe():
+	root.grid_forget()
+	second_frame.grid()
+	third_frame.grid_forget()
+	
+def hide_secondframe():
+	root.grid_forget()
+	second_frame.grid_forget()
+	third_frame.grid()
+	
+def startlapse_fullmove():
+	x=1  ## for use later in control code to do if x=1 start fullmove code
+	
+def startlapse_partial():
+	x=2  #for use later in control code to do if x=2 start partial move code
 
-###############
+def begin_move_but():
+	y=1  #for use later in the partial move loops
+def end_move_but():
+	y=2 #for use later in the partial move loops
+	
+def start_lapse():
+	n=1  #for use later to start the timelapse with all the user inputs.  if n=1 do begin
+	
+########
 
-##now to make the actual GUI with all inputs
+
+
 mainframe= Tk()
 mainframe.wm_title("Timelapse control")
 mainframe.config(background="#FFFFFF")
 mainframe.geometry('240x320')
+
 root= Frame(mainframe,bg="#037481")
 root.grid()
+#####
 
+
+#####buttons for the first window
 var=IntVar()
 var1=IntVar()
 
@@ -74,20 +105,54 @@ upbutton.grid(row=0, column=2,padx=5,pady=5)
 downbutton=Radiobutton(root, text="move down", variable=var1,value=4,command=down)
 downbutton.grid(row=1,column=2,padx=5,pady=5)
 
-shots_scale=Scale(root,from_=0, to=1000,resolution=2, orient=HORIZONTAL,label="shots",tickinterval=50)
-shots_scale.grid(row=2,column=1,padx=5)
+shots_scale=Scale(root,from_=0, to=1000,resolution=2, orient=HORIZONTAL,label="shots",tickinterval=200)
+shots_scale.grid(row=2,column=1,padx=5,sticky=W+E)
 shots=shots_scale.wget()
 
 exp_scale=Scale(root,from_=0, to=30,orient=HORIZONTAL,label="exposure",tickinterval=5)
-exp_scale.grid(row=3,column=1,padx=5)
+exp_scale.grid(row=3,column=1,padx=5,sticky=W+E)
 exposure=exp_scale.wget()
 
-waittime_scale=Scale(root,from_=0,to=600,orient=HORIZONTAL,label="waittime",tickinterval=10)  #ten minutes max?
-waittime_scale.grid(row=4,column=1,padx=5)
+waittime_scale=Scale(root,from_=0,to=60,orient=HORIZONTAL,label="waittime",tickinterval=12)  #ten minutes max?
+waittime_scale.grid(row=4,column=1,padx=5,sticky=W+E)
 waittime=waittime_scale.wget()
 
-start_but=Button(root,text="start",command=startlapse,bg="red")
-start_but.grid(row=5,column=1)
+next_but=Button(root,text="next",command=hide_startframe,fg="red")
+next_but.grid(row=5,column=1,columnspan=2,sticky=W+E)
 #####
+
+
+######second frame buttons and control, for choosing partial move or just starting the timelapse
+second_frame=Frame(mainframe,bg="#037481")
+second_frame.grid()
+
+fullmove_but_yes=Button(second_frame,text="move entire shot?",command=startlapse_fullmove)
+fullmove_but_yes.grid(row=0,column=1,padx=5,pady=5)
+fullmove_but_no=Button(second_frame,text="dont move entire shot?",command=hide_secondframe)
+fullmove_but_no.grid(row=0,column=2,padx=5,pady=5)
+start_but_move=Button(second_frame,text="start",command=start_lapse)
+start_but_move.grid(row=1,column=1,columnspan(2),sticky=W+E)
+######
+
+
+#######third frame buttons and control, for partial move options
+third_frame=Frame(mainframe,bg="#037481")
+third_frame.grid()
+
+beginning_move=Button(third_frame,text="move at the start?",command=begin_move_but)
+
+end_move=Button(third_frame,text="move at the end of shot?",command=end_move_but)
+
+shots_to_move=Scale(third_frame,from_=0,to=shots-1,orient=HORIZONTAL,label="shots to start/stop at", tickinterval=200)
+partial_shots=shots_to_move.get()
+
+start_but_move=Button(third_frame,text="start",command=start_lapse)
+start_but_move.grid(row=1,column=1,columnspan(2),sticky=W+E)
+#####
+
+#### on start of GUI hide second and third frame till functions are called to show them
+third_frame.grid_forget()
+second_frame.grid_forget()
+######
 
 root.mainloop()  #this calls the actual GUI, everything must be above it
