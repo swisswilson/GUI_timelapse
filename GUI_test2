@@ -1,0 +1,131 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+#
+
+# Creates three "windows" that the user can navigate through using Back and Next - buttons.
+
+import tkinter
+import tkinter.ttk
+
+
+def startlapse_fullmove():
+	x=1  ## for use later in control code to do if x=1 start fullmove code
+	
+def startlapse_partial():
+	x=2  #for use later in control code to do if x=2 start partial move code
+
+def begin_move_but():
+	y=1  #for use later in the partial move loops
+def end_move_but():
+	y=2 #for use later in the partial move loops
+	
+def start_lapse():
+	n=1  #for use later to start the timelapse with all the user inputs.  if n=1 do begin
+	
+
+def create_widgets_in_first_frame():
+	var=IntVar()
+	var1=IntVar()
+	
+	leftbutton=Radiobutton(first_frame text="move left", variable=var,value=1,command=left)
+	leftbutton.grid(row=0,column=1,padx=5,pady=5)
+	rightbutton=Radiobutton(first_frame, text="move right", variable=var,value=2,command=right)
+	rightbutton.grid(row=1, column=1,padx=5,pady=5)
+	upbutton=Radiobutton(first_frame, text="move up", variable=var1,value=3,command=up)
+	upbutton.grid(row=0, column=2,padx=5,pady=5)
+	downbutton=Radiobutton(first_frame, text="move down", variable=var1,value=4,command=down)
+	downbutton.grid(row=1,column=2,padx=5,pady=5)
+	
+	shots_scale=Scale(first_frame,from_=0, to=1000,resolution=2, orient=HORIZONTAL,label="shots",tickinterval=200)
+	shots_scale.grid(row=2,column=1,padx=5,sticky=W+E)
+	shots=shots_scale.get()
+
+	exp_scale=Scale(first_frame,from_=0, to=30,orient=HORIZONTAL,label="exposure",tickinterval=5)
+	exp_scale.grid(row=3,column=1,padx=5,sticky=W+E)
+	exposure=exp_scale.get()
+	
+	waittime_scale=Scale(first_frame,from_=0,to=60,orient=HORIZONTAL,label="waittime",tickinterval=12)  #ten minutes max?
+	waittime_scale.grid(row=4,column=1,padx=5,sticky=W+E)
+	waittime=waittime_scale.get()
+	
+	next_but=Button(first_frame,text="next",command=call_second_frame_on_top,fg="red")
+	next_but.grid(row=5,column=1,columnspan=2,sticky=W+E)
+def create_widgets_in_second_frame():
+	fullmove_but_yes=Button(second_frame,text="move entire shot?",command=startlapse_fullmove)
+	fullmove_but_yes.grid(row=0,column=1,padx=5,pady=5)
+	fullmove_but_no=Button(second_frame,text="dont move entire shot?",command=call_third_frame_on_top)
+	fullmove_but_no.grid(row=0,column=2,padx=5,pady=5)
+	start_but_move=Button(second_frame,text="start",command=start_lapse)
+	start_but_move.grid(row=1,column=1,columnspan=2,sticky=W+E)
+
+def create_widgets_in_third_frame():
+	beginning_move=Button(third_frame,text="move at the start?",command=begin_move_but)
+
+	end_move=Button(third_frame,text="move at the end of shot?",command=end_move_but)
+
+	shots_to_move=Scale(third_frame,from_=0,to=shots-1,orient=HORIZONTAL,label="shots to start/stop at", tickinterval=200)
+	partial_shots=shots_to_move.get()
+
+	start_but_move=Button(third_frame,text="start",command=start_lapse)
+	start_but_move.grid(row=1,column=1,columnspan=2,sticky=W+E)
+
+def call_first_frame_on_top():
+    # This function can be called only from the second window.
+    # Hide the second window and show the first window.
+    second_frame.grid_forget()
+    first_frame.grid(column=0, row=0, padx=20, pady=5, sticky=(tkinter.W, tkinter.N, tkinter.E))
+
+def call_second_frame_on_top():
+    # This function can be called from the first and third windows.
+    # Hide the first and third windows and show the second window.
+    first_frame.grid_forget()
+    third_frame.grid_forget()
+    second_frame.grid(column=0, row=0, padx=20, pady=5, sticky=(tkinter.W, tkinter.N, tkinter.E))
+
+def call_third_frame_on_top():
+    # This function can only be called from the second window.
+    # Hide the second window and show the third window.
+    second_frame.grid_forget()
+    third_frame.grid(column=0, row=0, padx=20, pady=5, sticky=(tkinter.W, tkinter.N, tkinter.E))
+
+def quit_program():
+    root_window.destroy()
+
+###############################
+# Main program starts here :) #
+###############################
+
+# Create the root GUI window.
+root_window = tkinter.Tk()
+
+# Define window size
+window_width = 200
+window_heigth = 100
+
+# Create frames inside the root window to hold other GUI elements. All frames must be created in the main program, otherwise they are not accessible in functions. 
+first_frame=tkinter.ttk.Frame(root_window, width=window_width, height=window_heigth)
+first_frame['borderwidth'] = 2
+first_frame['relief'] = 'sunken'
+first_frame.grid(column=0, row=0, padx=20, pady=5, sticky=(tkinter.W, tkinter.N, tkinter.E))
+
+second_frame=tkinter.ttk.Frame(root_window, width=window_width, height=window_heigth)
+second_frame['borderwidth'] = 2
+second_frame['relief'] = 'sunken'
+second_frame.grid(column=0, row=0, padx=20, pady=5, sticky=(tkinter.W, tkinter.N, tkinter.E))
+
+third_frame=tkinter.ttk.Frame(root_window, width=window_width, height=window_heigth)
+third_frame['borderwidth'] = 2
+third_frame['relief'] = 'sunken'
+third_frame.grid(column=0, row=0, padx=20, pady=5, sticky=(tkinter.W, tkinter.N, tkinter.E))
+
+# Create all widgets to all frames
+create_widgets_in_third_frame()
+create_widgets_in_second_frame()
+create_widgets_in_first_frame()
+
+# Hide all frames in reverse order, but leave first frame visible (unhidden).
+third_frame.grid_forget()
+second_frame.grid_forget()
+
+# Start tkinter event - loop
+root_window.mainloop()
