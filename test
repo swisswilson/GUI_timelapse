@@ -56,12 +56,14 @@ def moveH():
 #####defining functions for use in the GUI to navigate and call control code
 def hide_startframe():
 	root.grid_forget()
+	second_frame=Frame(mainframe,bg="#037481")
 	second_frame.grid()
 	third_frame.grid_forget()
 	
 def hide_secondframe():
 	root.grid_forget()
 	second_frame.grid_forget()
+	third_frame=Frame(mainframe,bg="#037481")
 	third_frame.grid()
 	
 def startlapse_fullmove():
@@ -89,6 +91,12 @@ mainframe.geometry('240x320')
 
 root= Frame(mainframe,bg="#037481")
 root.grid()
+
+second_frame=Frame(mainframe,bg="#037481")
+second_frame.grid()
+
+third_frame=Frame(mainframe,bg="#037481")
+third_frame.grid()
 #####
 
 
@@ -107,15 +115,15 @@ downbutton.grid(row=1,column=2,padx=5,pady=5)
 
 shots_scale=Scale(root,from_=0, to=1000,resolution=2, orient=HORIZONTAL,label="shots",tickinterval=200)
 shots_scale.grid(row=2,column=1,padx=5,sticky=W+E)
-shots=shots_scale.wget()
+shots=shots_scale.get()
 
 exp_scale=Scale(root,from_=0, to=30,orient=HORIZONTAL,label="exposure",tickinterval=5)
 exp_scale.grid(row=3,column=1,padx=5,sticky=W+E)
-exposure=exp_scale.wget()
+exposure=exp_scale.get()
 
 waittime_scale=Scale(root,from_=0,to=60,orient=HORIZONTAL,label="waittime",tickinterval=12)  #ten minutes max?
 waittime_scale.grid(row=4,column=1,padx=5,sticky=W+E)
-waittime=waittime_scale.wget()
+waittime=waittime_scale.get()
 
 next_but=Button(root,text="next",command=hide_startframe,fg="red")
 next_but.grid(row=5,column=1,columnspan=2,sticky=W+E)
@@ -123,8 +131,7 @@ next_but.grid(row=5,column=1,columnspan=2,sticky=W+E)
 
 
 ######second frame buttons and control, for choosing partial move or just starting the timelapse
-second_frame=Frame(mainframe,bg="#037481")
-second_frame.grid()
+
 
 fullmove_but_yes=Button(second_frame,text="move entire shot?",command=startlapse_fullmove)
 fullmove_but_yes.grid(row=0,column=1,padx=5,pady=5)
@@ -136,8 +143,7 @@ start_but_move.grid(row=1,column=1,columnspan=2,sticky=W+E)
 
 
 #######third frame buttons and control, for partial move options
-third_frame=Frame(mainframe,bg="#037481")
-third_frame.grid()
+
 
 beginning_move=Button(third_frame,text="move at the start?",command=begin_move_but)
 
