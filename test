@@ -58,10 +58,10 @@ def hide_startframe():
 	root.grid_forget()
 	second_frame=Frame(mainframe,bg="#037481")
 	second_frame.grid()
-	third_frame.grid_forget()
+	
 	
 def hide_secondframe():
-	root.grid_forget()
+	
 	second_frame.grid_forget()
 	third_frame=Frame(mainframe,bg="#037481")
 	third_frame.grid()
@@ -162,3 +162,4 @@ second_frame.grid_forget()
 ######
 
 root.mainloop()  #this calls the actual GUI, everything must be above it
+
