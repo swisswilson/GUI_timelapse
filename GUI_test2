@@ -1,4 +1,5 @@
 
+
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 #
@@ -7,7 +8,36 @@
 
 from tkinter import *
 
+def left():
+        gpio.output(dir1,1)
 
+def right():
+        gpio.output(dir1,0)
+
+def up():
+        gpio.output(dir2,1)
+
+def down():
+        gpio.output(dir2,0)
+
+def step(s1,s2):
+        gpio.output(motorpin1,s1)
+        gpio.output(motorpin2,s2)
+
+def moveV():
+        for i in range(0,4):
+                step(1,0)
+                sleep(0.5)
+                step(0,0)
+                sleep(0.5)
+
+def moveH():
+        for i in range(0,4):
+                step(0,1)
+                sleep(0.5)
+                step(0,0)
+                sleep(0.5)
+				
 
 def startlapse_fullmove():
 	x=1  ## for use later in control code to do if x=1 start fullmove code
