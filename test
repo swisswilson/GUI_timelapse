@@ -23,20 +23,20 @@ gpio.setup(dir2,gpio.OUT)
 
 #define functions for controlling motors here
 def left():
-        #gpio.output(dir1,1)
+        gpio.output(dir1,1)
 
 def right():
-        #gpio.output(dir1,0)
+        gpio.output(dir1,0)
 
 def up():
-        #gpio.output(dir2,1)
+        gpio.output(dir2,1)
 
 def down():
-        #gpio.output(dir2,0)
+        gpio.output(dir2,0)
 
 def step(s1,s2):
-        #gpio.output(motorpin1,s1)
-        #gpio.output(motorpin2,s2)
+        gpio.output(motorpin1,s1)
+        gpio.output(motorpin2,s2)
 
 def moveV():
         for i in range(0,4):
@@ -76,10 +76,11 @@ def hide_startframe():
    global second_frame
    root.grid_forget()
    second_frame=Frame(mainframe,bg="#037481")
+   second_frame.geometry('240x320')
    fullmove_but_yes=Button(second_frame,text="move entire shot?",command=startlapse_fullmove)
-   fullmove_but_yes.grid(row=0,column=1,padx=5,pady=5)
+   fullmove_but_yes.grid(row=0,column=1)
    fullmove_but_no=Button(second_frame,text="dont move entire shot?",command=startlapse_partial)
-   fullmove_but_no.grid(row=0,column=2,padx=5,pady=5)
+   fullmove_but_no.grid(row=0,column=2)
    start_but_move=Button(second_frame,text="start",command=start_lapse)
    start_but_move.grid(row=1,column=1,columnspan=2,sticky=W+E)
    beginning_move=Button(second_frame,text="move at the start?",command=begin_move_but)
@@ -87,6 +88,7 @@ def hide_startframe():
    end_move=Button(second_frame,text="move at the end of shot?",command=end_move_but)
 
    shots_to_move=Scale(second_frame,from_=0,to=shots-1,orient=HORIZONTAL,label="shots to start/stop at", tickinterval=200)
+   shots_to_move.grid(row=2,column=3,columnspan=2,sticky=W+E)
    partial_shots=shots_to_move.get()
    
    second_frame.grid()
@@ -105,24 +107,24 @@ var=IntVar()
 var1=IntVar()
 
 leftbutton=Radiobutton(root, text="move left", variable=var,value=1,command=left)
-leftbutton.grid(row=0,column=1,padx=5,pady=5)
+leftbutton.grid(row=0,column=1)
 rightbutton=Radiobutton(root, text="move right", variable=var,value=2,command=right)
-rightbutton.grid(row=1, column=1,padx=5,pady=5)
+rightbutton.grid(row=1, column=1)
 upbutton=Radiobutton(root, text="move up", variable=var1,value=3,command=up)
-upbutton.grid(row=0, column=2,padx=5,pady=5)
+upbutton.grid(row=0, column=2)
 downbutton=Radiobutton(root, text="move down", variable=var1,value=4,command=down)
-downbutton.grid(row=1,column=2,padx=5,pady=5)
+downbutton.grid(row=1,column=2)
 
 shots_scale=Scale(root,from_=0, to=1000,resolution=2, orient=HORIZONTAL,label="shots",tickinterval=200)
-shots_scale.grid(row=2,column=1,padx=5,sticky=W+E)
+shots_scale.grid(row=2,column=1,sticky=W+E)
 shots=shots_scale.get()
 
 exp_scale=Scale(root,from_=0, to=30,orient=HORIZONTAL,label="exposure",tickinterval=5)
-exp_scale.grid(row=3,column=1,padx=5,sticky=W+E)
+exp_scale.grid(row=3,column=1,sticky=W+E)
 exposure=exp_scale.get()
 
 waittime_scale=Scale(root,from_=0,to=60,orient=HORIZONTAL,label="waittime",tickinterval=12)  #ten minutes max?
-waittime_scale.grid(row=4,column=1,padx=5,sticky=W+E)
+waittime_scale.grid(row=4,column=1,sticky=W+E)
 waittime=waittime_scale.get()
 
 next_but=Button(root,text="next",command=hide_startframe,fg="red")
